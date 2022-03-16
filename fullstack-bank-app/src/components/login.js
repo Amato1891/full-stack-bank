@@ -106,7 +106,7 @@ function LoginForm(props){
           <hr/>
           { loginData ? ('') : (
           <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          clientId={'77760153420-mb0hci7u2tabpan5vdc0v76igcch724u.apps.googleusercontent.com'}
           buttonText='Log in with Google'
           onSuccess={handleLogin}
           onFailure={handleFailure}

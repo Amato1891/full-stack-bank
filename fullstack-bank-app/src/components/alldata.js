@@ -18,7 +18,7 @@ var requestOptions = {
 
     React.useEffect(()=> {
         // fetch all accounts from API
-        fetch("http://localhost:5000/account/all", requestOptions)
+        fetch("/account/all", requestOptions)
         .then(response => response.json())
         .then(data => {
             console.log(data);
