@@ -2,12 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "bank backend",
+  "engines": {
+    "node": "14.17.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "cd fullstack-bank-app && npm run build",
-    "install-client": "cd fullstack-bank-app && npm install",
-    "heroku-postbuild": "npm run install-fullstack-bank-app && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix fullstack-bank-app && npm run build --prefix fullstack-bank-app"
   },
   "author": "amato1892@yahoo.com",
   "license": "MIT",

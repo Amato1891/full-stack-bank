@@ -9,7 +9,7 @@ const path = require('path');
 require('dotenv').config();
 
 // used to serve static files from public directory
-app.use(express.static(path.join(__dirname, 'build')));
+//app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors());
 
 // create google user account
@@ -155,6 +155,10 @@ app.get('/account/all', authorize("customer:read"), function (req, res) {
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('fullstack-bank-app/build'));
+
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
 }
 
 var port = process.env.PORT || 5000;
