@@ -1,4 +1,5 @@
 import React from "react";
+
 function NavBar(props){
 
     const [loggedInUser,setLoggedInUser] = React.useState(props.loggedInUser);
