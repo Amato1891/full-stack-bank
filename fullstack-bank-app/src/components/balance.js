@@ -57,11 +57,11 @@ function Balance(){
               props.setShow(false);
               setBalance(data.balance);
               props.setStatus(data.balance);
-              console.log('JSON:', data);
-              console.log('balance:', data.balance);
+              // console.log('JSON:', data);
+              // console.log('balance:', data.balance);
           } catch(err) {
               props.setStatus(text)
-              console.log('err:', text);
+              // console.log('err:', text);
           }
       });
     }

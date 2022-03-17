@@ -68,7 +68,7 @@ app.get('/account/login/:email/:password', function (req, res, next) {
     dal.find(req.params.email).
         then((user) => {
 
-            // if user exists, check password
+            // if user exists, check password & create JWT
             if(user.length > 0){
                 if (user[0].password === req.params.password){
                     const payload= user[0];
@@ -132,7 +132,7 @@ app.get('/account/googleupdate/:email/:amount', function (req, res) {
 
 
 // update - deposit/withdraw amount
-app.get('/account/update/:email/:amount', function (req, res) {
+app.get('/account/update/:email/:amount', authorize(), function (req, res) {
 
     var amount = Number(req.params.amount);
 

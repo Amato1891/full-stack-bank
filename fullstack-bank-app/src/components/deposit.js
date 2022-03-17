@@ -35,10 +35,10 @@ function Deposit(){
         try {
             const data = JSON.parse(text);
             setBalance(data.balance);
-            console.log('JSON:', data);
-            console.log('balance:', data.balance);
+            // console.log('JSON:', data);
+            // console.log('balance:', data.balance);
         } catch(err) {
-            console.log('err:', err);
+            // console.log('err:', err);
         }
     });
   
@@ -86,6 +86,18 @@ function Deposit(){
      !loginData ? email = Cookies.get('email') : email = loginData.email;
      !loginData ? uri = `/account/update/${email}` : uri = `/account/googleupdate/${email}`
 
+     //JWT auth
+   const token = Cookies.get('token')
+   var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions = {
+ method: 'GET',
+ headers: myHeaders,
+ redirect: 'follow'
+};
+
        let invalidTransaction = true;
        if(amount >= 1) invalidTransaction = false;
        if(amount < 1) invalidTransaction = true;
@@ -93,18 +105,18 @@ function Deposit(){
     function handle(){
       let depositAmount = Number(amount);
       if(depositAmount < 1)return
-      fetch(`${uri}/${depositAmount}`)
+      fetch(`${uri}/${depositAmount}`, requestOptions)
       .then(response => response.text())
       .then(text => {
           try {
             const data = JSON.parse(text);
               props.setStatus('Success');
               props.setShow(false);
-              console.log('JSON:', data);
+              // console.log('JSON:', data);
               props.setBalance(props.balance + depositAmount)
           } catch(err) {
               props.setStatus('Deposit failed')
-              console.log('err:', text);
+              // console.log('err:', text);
           }
       });
     }

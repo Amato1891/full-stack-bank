@@ -35,10 +35,10 @@ function Withdraw(){
         try {
             const data = JSON.parse(text);
             setBalance(data.balance);
-            console.log('JSON:', data);
-            console.log('balance:', data.balance);
+            // console.log('JSON:', data);
+            // console.log('balance:', data.balance);
         } catch(err) {
-            console.log('err:', err);
+            // console.log('err:', err);
         }
     });
   
@@ -87,19 +87,31 @@ function Withdraw(){
    !loginData ? email = Cookies.get('email') : email = loginData.email;
    !loginData ? uri = `/account/update/${email}` : uri = `/account/googleupdate/${email}`;
 
+   //JWT auth
+   const token = Cookies.get('token')
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
     let invalidTransaction = true;
        if(amount >= 1) invalidTransaction = false;
        if(amount < 1) invalidTransaction = true;
   
     function handle(){
-      let withdrawAmount = Number(amount);
+      let withdrawAmount = Number(amount); 
       if(withdrawAmount < 1)return
       
       // Check if there is enough funds in account to cover the transaction
        if(withdrawAmount > props.balance) return setBalanceError('Insufficient funds.')
 
       // Send the withdraw amount
-      fetch(`${uri}/-${withdrawAmount}`)
+      fetch(`${uri}/-${withdrawAmount}`, requestOptions)
       .then(response => response.text())
       .then(text => {
           try {
@@ -107,10 +119,10 @@ function Withdraw(){
               props.setStatus('Success');
               props.setShow(false);
               props.setBalance(props.balance - withdrawAmount)
-              console.log('JSON:', data);
+              // console.log('JSON:', data);
           } catch(err) {
               props.setStatus('Deposit failed')
-              console.log('err:', text);
+              // console.log('err:', text);
           }
       });
     };

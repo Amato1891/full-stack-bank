@@ -8,12 +8,11 @@ function AllData(){
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Authorization", `Bearer ${token}`);
 
-var raw = "";
-
+//JWT auth
 var requestOptions = {
   method: 'GET',
   headers: myHeaders,
-  redirect: 'follow'
+  redirect: 'follow' 
 };
 
     React.useEffect(()=> {
@@ -21,7 +20,7 @@ var requestOptions = {
         fetch("/account/all", requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             setData(data)
         });
     }, []);

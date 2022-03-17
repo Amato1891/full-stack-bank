@@ -26,10 +26,10 @@ function Spa(){
   return(
     <HashRouter>
     <NavBar loggedInUser={loggedInUser}/> 
-    <div className ="container" style={{padding: "20px"}}></div>
+    <div className ="container" style={{padding: "10px"}}></div>
     {loggedInUser || loginData ? (
            
-           <div style={{position:'relative', color:'#ffffff', left:'55%',fontSize:'1.2rem'}}>{`Welcome, ${name || ''} `} 
+           <div style={{position:'relative', color:'#ffffff',fontSize:'1.2rem', textAlign:'right', padding:'15px'}}>{`Welcome, ${name || ''} `} 
         <Link to="/">
             <button className="btn btn-dark" onClick={()=>{
             Cookies.remove('name');
