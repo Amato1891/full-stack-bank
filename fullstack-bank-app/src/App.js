@@ -9,6 +9,7 @@ import Balance from './components/balance';
 import AllData from './components/alldata';
 import Deposit from './components/deposit';
 import Withdraw from './components/withdraw';
+import Footer from './components/footer';
 import Cookies from 'js-cookie';
 let loggedInUser = Cookies.get('loggedInUser');
 
@@ -28,7 +29,7 @@ function Spa(){
     <div className ="container" style={{padding: "20px"}}></div>
     {loggedInUser || loginData ? (
            
-           <div style={{position:'relative', left:'70%', color:'#ffffff', fontSize:'1.2rem'}}>{`Welcome, ${name || ''} `} 
+           <div style={{position:'relative', color:'#ffffff', left:'55%',fontSize:'1.2rem'}}>{`Welcome, ${name || ''} `} 
         <Link to="/">
             <button className="btn btn-dark" onClick={()=>{
             Cookies.remove('name');
@@ -55,6 +56,7 @@ function Spa(){
             <Route path="/Deposit"><Deposit/></Route>
             <Route path="/Withdraw"> <Withdraw/></Route>
     </Switch>
+    <Footer/>
   </HashRouter>
   )
 };
