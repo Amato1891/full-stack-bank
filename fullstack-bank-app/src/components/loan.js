@@ -33,7 +33,7 @@ function Loan() {
         handleRedirect('login')
     }},[])
   let apr;
-  console.log(JSON.stringify({loan:{income:income, loantype:loanType, loanamount:loanAmount, repayment: repayment}}))
+  //console.log(JSON.stringify({loan:{income:income, loantype:loanType, loanamount:loanAmount, repayment: repayment}}))
   var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Authorization", `Bearer ${token}`);
@@ -76,10 +76,15 @@ var requestOptions = {
   };
 
   const checked = (e) => {
-    console.log(e.target.checked)
     setSubmitDisable(!e.target.checked);
-  }
+  };
 
+  const enableButton = () => {
+    if(loanType === 'Credit Card'){
+    setSubmitDisable(false);
+    console.log(' FIRED ')
+  };
+  };
     return(<>
   
    <div className={loadAnimation}></div>
@@ -120,12 +125,11 @@ var requestOptions = {
 
         {loanType === 'Credit Card' ? (<FormGroup>
         <Label for="loanAmount">Credit Limit Requested <small>(min. $500)</small></Label>
-          <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' onChange={e => setLoanAmount(Math.round(e.target.value))} required/>
+          <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' onChange={e => setLoanAmount(Math.round(e.target.value))} onClick={()=>enableButton()} required/>
         </FormGroup>) : loanType ? (<FormGroup>
         <Label for="loanAmount">Amount Requested <small>(min. $500)</small></Label>
           <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' onChange={e => setLoanAmount(Math.round(e.target.value))} required/>
         </FormGroup>) : ('')}
-
 
         {loanType === 'Credit Card' ? ('') : loanAmount >= 500 ? (<FormGroup>
           <Label for="exampleSelectMulti">Repayment Length <small>(Months)</small></Label>
