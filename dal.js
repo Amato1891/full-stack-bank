@@ -22,10 +22,10 @@ function googleCreate(name, email, googleId){
 }
 
 // create user account
-function create(name, email, password){
+function create(name, email, password, accountChecking){
     return new Promise((resolve, reject) => {    
         const collection = db.collection('users');
-        const doc = {name, email, password, balance: 0};
+        const doc = {name, email, password, balance: 0, accountChecking, lineOfCredit:[]};
         collection.insertOne(doc, {w:1}, function(err, result) {
             err ? reject(err) : resolve(doc);
         });    
@@ -96,7 +96,7 @@ function googleUpdate(email, amount){
     });    
 }
 
-// update - deposit/withdraw amount
+// update - deposit/withdraw amount 
 function update(email, amount){
     return new Promise((resolve, reject) => {    
         const customers = db
@@ -126,5 +126,23 @@ function all(){
     })
 }
 
+// Create new loan
+function createLoan(email, type, balance, lengthOfLoan){
+    return new Promise((resolve, reject) => {    
+        const customers = db
+            .collection('users')            
+            .findOneAndUpdate(
+                {email: email},
+                { $push: { lineOfCredit: {type:type, balance: balance, length: lengthOfLoan}}},
+                {  returnOriginal: false },
+                function (err, documents) {
+                    err ? reject(err) : resolve(documents);
+                }
+            );            
 
-module.exports = {create, findOne, find, update, all, googleCreate, googleFind, googleFindOne, googleUpdate};
+
+    });    
+}
+
+
+module.exports = {create, findOne, find, update, all, googleCreate, googleFind, googleFindOne, googleUpdate, createLoan};

@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./context";
 import Cookies from 'js-cookie';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
 
 function Balance(){
     const [show, setShow]     = React.useState(true);
@@ -21,7 +21,7 @@ function Balance(){
       <Card
         bgcolor="info"
         header="Balance"
-        status={status}
+        status={typeof(status) === 'number' ? `$${Number.parseFloat(status).toFixed(2)}` : ''}
         body={show ?
           <BalanceForm setShow={setShow} setStatus={setStatus}/> :
           <BalanceMsg setShow={setShow} setStatus={setStatus}/>}

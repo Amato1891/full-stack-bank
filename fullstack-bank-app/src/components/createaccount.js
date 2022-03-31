@@ -32,16 +32,19 @@ function CreateForm(props){
     const [verifyPassword, setVerifyPassword] =React.useState('');
     const [errors, setErrors]                 =React.useState('');
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+    let accnum = Date.now();
 
     function handle(){
+        setErrors('');
         if(name.length < 2) return setErrors('Name cannot be left blank');
         if(email.length < 2) return setErrors('Email cannot be left blank');
         if(password.length < 2) return setErrors('Password cannot be left blank');
         if(password.length < 8) return setErrors('Password must be atleast 8 characters');
         if(!emailRegex.test(email)) return setErrors('Invalid Email');
         if(password !== verifyPassword) return setErrors('Passwords do not match');
-       const url = `/account/create/${name}/${email}/${password}`;
+        let lowerEmail = email.toLowerCase();
+        if(errors.length < 1){
+       const url = `/account/create/${name}/${lowerEmail}/${password}/${accnum}`;
        (async () => {
            var res = await fetch(url);
            console.log(res)
@@ -49,7 +52,7 @@ function CreateForm(props){
            var data = await res.json();
            console.log(data);
            props.setShow(false);
-       })();
+       })();}
     }
 
     return(<>

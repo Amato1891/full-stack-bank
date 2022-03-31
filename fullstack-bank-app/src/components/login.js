@@ -21,6 +21,7 @@ function AfterLogin(){
           <Link id="login-link" to="/deposit"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Deposit Funds</button></Link>
           <Link id="login-link" to="/withdraw"> <button id = 'link-btn' type="submit"className="btn btn-dark" >Withdraw Funds</button></Link>
           <Link id="login-link" to="/balance"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Check balance</button></Link>
+          <Link id="login-link" to="/dashboard"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Dashboard</button></Link>
         </div>}
       />
   </>)
@@ -40,16 +41,18 @@ function LoginForm(props){
     if(email.length > 2 && password.length > 2) disable = false;
 
     function handle(){
-        fetch(`/account/login/${email}/${password}`)
+      var expiration = new Date(new Date().getTime() + 60 * 60 * 1000);
+      let lowerEmail = email.toLowerCase();
+        fetch(`/account/login/${lowerEmail}/${password}`)
         .then(response => response.text())
         .then(text => {
             try {
                 const data = JSON.parse(text);
                 console.log('JSON:', data);
-                Cookies.set('loggedInUser', true);
-                Cookies.set('name', data.name);
-                Cookies.set('email', data.email);
-                Cookies.set('token', data.token);
+                Cookies.set('loggedInUser', true, { expires: expiration });
+                Cookies.set('name', data.name, { expires: expiration });
+                Cookies.set('email', data.email, { expires: expiration });
+                Cookies.set('token', data.token, { expires: expiration });
                 window.location.reload();
             } catch(err) {
                  setErrorMsg(text)
@@ -62,9 +65,10 @@ function LoginForm(props){
       };
 
       const handleLogin = (googleData) => {
+        var expiration = new Date(new Date().getTime() + 60 * 60 * 1000);
          const googleUserData = {name:googleData.profileObj.givenName, email:googleData.profileObj.email, googleId:googleData.profileObj.googleId}
-         Cookies.set('loginData',JSON.stringify(googleUserData));
-         Cookies.set('loggedInUser')
+         Cookies.set('loginData',JSON.stringify(googleUserData), { expires: expiration });
+         Cookies.set('loggedInUser', { expires: expiration })
          setLoginData(googleUserData);
          window.location.reload();
         googleUser();

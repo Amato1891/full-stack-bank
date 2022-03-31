@@ -50,7 +50,7 @@ function Withdraw(){
         header={<div>
         <h5>Withdraw</h5>
           <div style={{border:'solid 1px white', borderRadius:'3px'}}>
-          {`Balance: ${balance}`}
+          {`Balance: $${Number.parseFloat(balance).toFixed(2)}`}
           </div>
         </div>}
         status={`${status}`}

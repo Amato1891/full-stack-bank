@@ -1,9 +1,33 @@
 import React from "react";
+import Cookies from 'js-cookie';
+import {Link} from 'react-router-dom';
 
 function NavBar(props){
-
+  const [loginData, setLoginData] =React.useState(
+    Cookies.get('loginData')
+    ? (JSON.parse(Cookies.get('loginData')))
+    : (null)
+  );
+    let name;
+ !loginData ? name = Cookies.get('name') : name = loginData.name;
     const [loggedInUser,setLoggedInUser] = React.useState(props.loggedInUser);
-  
+    const [windowSize, setWindowSize] = React.useState(window.innerWidth);
+
+    // function reportWindowSize() {
+    //   setWindowSize(window.innerWidth);
+    // };
+    // window.onresize = reportWindowSize;
+
+    function handleLogout() {
+      Cookies.remove('name');
+            Cookies.remove('email');
+            Cookies.remove('loggedInUser');
+            Cookies.remove('token');
+            Cookies.remove('loginData');
+            setLoginData(null);
+            window.location.reload();
+    };
+
       return(<>{ loggedInUser ? (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <div className="container-fluid">
@@ -13,6 +37,12 @@ function NavBar(props){
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+            <a className="nav-link " href="#/dashboard">Dashboard</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link " href="#/loan">Loans</a>
+          </li>
           <li className="nav-item">
             <a className="nav-link" href="#/deposit">Deposit</a>
           </li>
@@ -26,6 +56,12 @@ function NavBar(props){
             <a className="nav-link " href="#/alldata">All Data</a>
           </li>
         </ul>
+        <span className="navbar-text" onClick={handleLogout}>
+       Logout <Link to="/">
+            <button className="btn btn-dark" >
+            <i className="fa-solid fa-right-from-bracket"></i></button>
+        </Link>
+  </span>
       </div>
     </div>
   </nav>

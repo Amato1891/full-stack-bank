@@ -4,17 +4,18 @@ import { Route, HashRouter, Link, Switch } from "react-router-dom";
 import NavBar from './components/navbar';
 import Home from './components/home';
 import Login from './components/login';
+import Dashboard from './components/dashboard';
 import CreateAccount from './components/createaccount';
 import Balance from './components/balance';
 import AllData from './components/alldata';
 import Deposit from './components/deposit';
 import Withdraw from './components/withdraw';
 import Footer from './components/footer';
+import Loan from './components/loan';
 import Cookies from 'js-cookie';
 let loggedInUser = Cookies.get('loggedInUser');
 
 function Spa(){
-
   const [loginData, setLoginData] =React.useState(
     Cookies.get('loginData')
     ? (JSON.parse(Cookies.get('loginData')))
@@ -28,33 +29,20 @@ function Spa(){
     <NavBar loggedInUser={loggedInUser}/> 
     <div className ="container" style={{padding: "10px"}}></div>
     {loggedInUser || loginData ? (
-           
-           <div style={{position:'relative', color:'#ffffff',fontSize:'1.2rem', textAlign:'right', padding:'15px'}}>{`Welcome, ${name || ''} `} 
-        <Link to="/">
-            <button className="btn btn-dark" onClick={()=>{
-            Cookies.remove('name');
-            Cookies.remove('email');
-            Cookies.remove('loggedInUser');
-            Cookies.remove('token');
-            Cookies.remove('loginData');
-            setLoginData(null);
-            window.location.reload();
-            }}>
-            <i className="fa-solid fa-right-from-bracket"></i></button>
-        </Link>
+     <div style={{position:'relative', color:'#ffffff',fontSize:'1.2rem', textAlign:'right', padding:'15px'}}>{`Welcome, ${name || ''} `} 
         </div>
-
-           ) : ('')}
-
+    ) : ('')}
 
     <Switch>
     <Route exact path="/"><Home/></Route>
             <Route path="/login"><Login/></Route>
+            <Route path="/dashboard"><Dashboard/></Route>
             <Route path="/CreateAccount"><CreateAccount/></Route>
             <Route path="/Balance"><Balance/></Route>
             <Route path="/AllData"><AllData/></Route>
             <Route path="/Deposit"><Deposit/></Route>
             <Route path="/Withdraw"> <Withdraw/></Route>
+            <Route path="/Loan"> <Loan/></Route>
     </Switch>
     <Footer/>
   </HashRouter>

@@ -8,7 +8,7 @@ function Footer() {
         <div className="row">
           <div className="col-sm-12 col-md-6">
             <h6>About</h6>
-            <p className="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sollicitudin nibh sit amet commodo nulla facilisi. Sem fringilla ut morbi tincidunt augue interdum. Penatibus et magnis dis parturient montes nascetur. Donec enim diam vulputate ut pharetra. Augue neque gravida in fermentum et sollicitudin ac orci.</p>
+            <p className="text-justify">We are a small local bank located in Tampa, FL . Our mission it to help <b>EVERYONE</b> accomplish their financial goals.</p>
           </div>
 
           <div className="col-xs-6 col-md-3">

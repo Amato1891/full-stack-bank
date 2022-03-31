@@ -7,6 +7,7 @@ const res = require('express/lib/response');
 const authorize = require('./authorization-middleware');
 const path = require('path'); 
 require('dotenv').config();
+const Cookies = require('js-cookie');
 
 // used to serve static files from public directory
 //app.use(express.static(path.join(__dirname, 'build')));
@@ -38,7 +39,7 @@ app.get('/account/googlecreate/:name/:email/:googleId', function (req, res) {
 
 
 // create user account
-app.get('/account/create/:name/:email/:password', function (req, res) {
+app.get('/account/create/:name/:email/:password/:accnum', function (req, res) {
 
     // check if account exists
     dal.find(req.params.email).
@@ -51,7 +52,7 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
             }
             else{
                 // else create user
-                dal.create(req.params.name,req.params.email,req.params.password).
+                dal.create(req.params.name,req.params.email,req.params.password,req.params.accnum).
                     then((user) => {
                         console.log(user);
                         res.send(user);            
@@ -72,8 +73,8 @@ app.get('/account/login/:email/:password', function (req, res, next) {
             if(user.length > 0){
                 if (user[0].password === req.params.password){
                     const payload= user[0];
-                    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
-                    const currUser = {...user[0], token}
+                    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn:'1h'});
+                    const currUser = {...user[0], token};
                     // res.send(token);
                      res.send(currUser);
                 }
@@ -143,7 +144,7 @@ app.get('/account/update/:email/:amount', authorize(), function (req, res) {
     });    
 });
 
-// all accounts
+// get all accounts
 app.get('/account/all', authorize("customer:read"), function (req, res) {
 
     dal.all().
@@ -151,6 +152,17 @@ app.get('/account/all', authorize("customer:read"), function (req, res) {
             console.log(docs);
             res.send(docs);
     });
+});
+
+// Create - new loan
+app.get('/account/update/:email/:type/:balance/:lengthofloan', authorize(), function (req, res) {
+
+
+    dal.createLoan(req.params.email, req.params.type, req.params.balance, req.params.lengthofloan).
+        then((response) => {
+            console.log(response);
+            res.send(response);
+    });    
 });
 
 if(process.env.NODE_ENV === 'production') {

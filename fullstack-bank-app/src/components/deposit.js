@@ -43,14 +43,13 @@ function Deposit(){
     });
   
   }, []);
-  
     return (
       <Card
         bgcolor="success"
         header={<div>
         <h5>Deposit</h5>
           <div style={{border:'solid 1px white', borderRadius:'3px'}}>
-          {`Balance: ${balance}`}
+          {`Balance: $${Number.parseFloat(balance).toFixed(2)}`}
           </div>
         </div>}
         status={status}
@@ -62,7 +61,7 @@ function Deposit(){
   }
   function DepositMsg(props){
     return (<>
-      <h5>Cha-Ching!</h5>
+      <h5>Deposit Success!</h5>
       <button type="submit" 
         className="btn btn-dark" 
         onClick={() => {
