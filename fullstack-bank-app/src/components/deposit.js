@@ -2,6 +2,7 @@ import React from "react";
 import Cookies from 'js-cookie';
 import Card from "./context";
 import {useHistory} from 'react-router-dom';
+import ".//loan.css";
 
 function Deposit(){
   const [balance,setBalance] = React.useState('');
@@ -12,7 +13,6 @@ function Deposit(){
       ? (JSON.parse(Cookies.get('loginData')))
       : (null)
     ); 
-
     let history = useHistory();
       function handleClick() {
         history.push("/login");
@@ -43,13 +43,13 @@ function Deposit(){
     });
   
   }, []);
-    return (
+    return (<>
       <Card
         bgcolor="success"
         header={<div>
         <h5>Deposit</h5>
           <div style={{border:'solid 1px white', borderRadius:'3px'}}>
-          {`Balance: $${Number.parseFloat(balance).toFixed(2)}`}
+          {typeof(balance) === "number" ? (`Balance: $${Number.parseFloat(balance).toFixed(2)}`) : (<div className='loading'></div>)}
           </div>
         </div>}
         status={status}
@@ -57,11 +57,11 @@ function Deposit(){
           <DepositForm setShow={setShow} setStatus={setStatus} balance={balance} setBalance={setBalance}/> :
           <DepositMsg setShow={setShow} setStatus={setStatus}/>}
       />
-    )
+    </>)
   }
   function DepositMsg(props){
     return (<>
-      <h5>Deposit Success!</h5>
+      <h5>Deposit Accepted!</h5>
       <button type="submit" 
         className="btn btn-dark" 
         onClick={() => {
@@ -84,6 +84,7 @@ function Deposit(){
         let uri;
      !loginData ? email = Cookies.get('email') : email = loginData.email;
      !loginData ? uri = `/account/update/${email}` : uri = `/account/googleupdate/${email}`
+     let date = new Date().toDateString();
 
      //JWT auth
    const token = Cookies.get('token')
@@ -118,10 +119,18 @@ var requestOptions = {
               // console.log('err:', text);
           }
       });
+      fetch(`/account/update/transaction/${email}/deposit/${depositAmount}/${date}`, requestOptions).then(response => response.text())
+      .then(text => {
+          try {
+            const data = JSON.parse(text);
+            //console.log(data)
+          } catch(err) {
+             //console.log('err:', text);
+          }
+      });
     }
   
     return(<>
-    
       Amount<br/>
       <input type="number" 
         className="form-control" 

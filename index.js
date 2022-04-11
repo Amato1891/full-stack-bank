@@ -165,6 +165,17 @@ app.get('/account/update/:email/:type/:balance/:lengthofloan', authorize(), func
     });    
 });
 
+// Update - transaction data
+app.get('/account/update/transaction/:email/:type/:transactionAmount/:date', authorize(), function (req, res) {
+
+
+    dal.addTransaction(req.params.email, req.params.type, req.params.transactionAmount, req.params.date).
+        then((response) => {
+            console.log(response);
+            res.send(response);
+    });    
+});
+
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('fullstack-bank-app/build'));
 

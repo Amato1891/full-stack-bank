@@ -1,8 +1,6 @@
 import React from 'react';
-import Card from "./context";
-import { Link } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {useHistory} from 'react-router-dom';
 import './/loan.css';
 
@@ -67,9 +65,9 @@ var requestOptions = {
     const url = `/account/update/${email}/${loanType}/${loanAmount}/${repayment || 'Monthly'}`;
        (async () => {
            var res = await fetch(url, requestOptions);
-           console.log(res)
+           //console.log(res)
            var data = await res.json();
-           console.log(data);
+           //console.log(data);
        })()
        setLoadAnimation('loading');
        setTimeout(() => handleRedirect('dashboard'), 3000);
@@ -82,17 +80,16 @@ var requestOptions = {
   const enableButton = () => {
     if(loanType === 'Credit Card'){
     setSubmitDisable(false);
-    console.log(' FIRED ')
   };
   };
     return(<>
   
    <div className={loadAnimation}></div>
-   
+   <div style={{padding:'20px'}}>
         <h1>Loan department</h1>
         <div style={{padding:'25px', border:'5px solid white',display:"flex", maxWidth:"900px"}}>
       <Form>
-      <div style={{padding:'10px', fontSize:'1.2em'}}>To apply for a loan through Gbank, you will have to fill out a short application.</div>
+      <div style={{padding:'10px', fontSize:'1.2em'}}>To apply for a loan through Gbank, you'll need to fill out a short application.</div>
         <FormGroup>
           <Label for="name">Name:</Label>
           <div><b>{Cookies.get('name')}</b></div>
@@ -128,12 +125,12 @@ var requestOptions = {
           <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' onChange={e => setLoanAmount(Math.round(e.target.value))} onClick={()=>enableButton()} required/>
         </FormGroup>) : loanType ? (<FormGroup>
         <Label for="loanAmount">Amount Requested <small>(min. $500)</small></Label>
-          <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' onChange={e => setLoanAmount(Math.round(e.target.value))} required/>
+          <Input type="number" name="loanAmount" id="loanAmount" placeholder="Amount" min='500' max='250000' onChange={e => setLoanAmount(Math.round(e.target.value))} required/>
         </FormGroup>) : ('')}
 
         {loanType === 'Credit Card' ? ('') : loanAmount >= 500 ? (<FormGroup>
           <Label for="exampleSelectMulti">Repayment Length <small>(Months)</small></Label>
-          <Input type="select" name="repayment" id="repayment" value ={repayment || ''} onChange={e => setRepayment(e.target.value)} disabled={repayment} required>
+          <Input type="select" name="repayment" id="repayment" value ={repayment || ''} onChange={e => setRepayment(e.target.value)} required>
             <option></option>
             <option>12</option>
             <option>24</option>
@@ -145,12 +142,8 @@ var requestOptions = {
         {repayment ? (<FormGroup check>
         <Label check>
             <Input type="checkbox" id='checkOne' onChange={e => checked(e)} required />{' '}
-            By checking this box, I agree the income information submitted is accurate.
+            By checking this box, I agree the income information submitted is accurate & I agree to pay back this loan in the time alloted per details of the loan, if not I will be subject to incremental fees.
           </Label><br/>
-          <Label check>
-            <Input type="checkbox" id='checkTwo' onChange={e => checked(e)} required/>{' '}
-            By checking this box, I agree to pay back this loan in the time alloted per details of the loan, if not I will be subject to incremental fees.
-          </Label>
         </FormGroup>) : ('')}
         <Button onClick={handle} disabled={submitDisable}>Apply</Button><hr/>
         {repayment ? (
@@ -160,6 +153,7 @@ var requestOptions = {
           </div>
           ) : ('')}
       </Form>
+        </div>
         </div>
         </>)
 }

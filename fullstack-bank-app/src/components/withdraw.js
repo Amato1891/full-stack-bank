@@ -2,6 +2,7 @@ import React from "react";
 import Cookies from 'js-cookie';
 import Card from "./context";
 import {useHistory} from 'react-router-dom';
+import ".//loan.css";
 
 function Withdraw(){
     const [balance,setBalance] = React.useState('');
@@ -50,7 +51,7 @@ function Withdraw(){
         header={<div>
         <h5>Withdraw</h5>
           <div style={{border:'solid 1px white', borderRadius:'3px'}}>
-          {`Balance: $${Number.parseFloat(balance).toFixed(2)}`}
+          {typeof(balance) === "number" ? (`Balance: $${Number.parseFloat(balance).toFixed(2)}`) : (<div className='loading'></div>)}
           </div>
         </div>}
         status={`${status}`}
@@ -86,6 +87,7 @@ function Withdraw(){
       let uri;
    !loginData ? email = Cookies.get('email') : email = loginData.email;
    !loginData ? uri = `/account/update/${email}` : uri = `/account/googleupdate/${email}`;
+   let date = new Date().toDateString();
 
    //JWT auth
    const token = Cookies.get('token')
@@ -123,6 +125,15 @@ var requestOptions = {
           } catch(err) {
               props.setStatus('Deposit failed')
               // console.log('err:', text);
+          }
+      });
+      fetch(`/account/update/transaction/${email}/withdraw/${withdrawAmount}/${date}`, requestOptions).then(response => response.text())
+      .then(text => {
+          try {
+            const data = JSON.parse(text);
+            //console.log(data)
+          } catch(err) {
+             //console.log('err:', text);
           }
       });
     };

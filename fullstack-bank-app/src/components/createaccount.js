@@ -47,10 +47,10 @@ function CreateForm(props){
        const url = `/account/create/${name}/${lowerEmail}/${password}/${accnum}`;
        (async () => {
            var res = await fetch(url);
-           console.log(res)
+           //console.log(res)
            if(res.status === 400) return setErrors('This email is already registered to another user.');
            var data = await res.json();
-           console.log(data);
+           //console.log(data);
            props.setShow(false);
        })();}
     }

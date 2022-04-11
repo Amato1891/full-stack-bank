@@ -25,7 +25,7 @@ function googleCreate(name, email, googleId){
 function create(name, email, password, accountChecking){
     return new Promise((resolve, reject) => {    
         const collection = db.collection('users');
-        const doc = {name, email, password, balance: 0, accountChecking, lineOfCredit:[]};
+        const doc = {name, email, password, balance: 0, accountChecking, lineOfCredit:[], transactions:[]};
         collection.insertOne(doc, {w:1}, function(err, result) {
             err ? reject(err) : resolve(doc);
         });    
@@ -144,5 +144,23 @@ function createLoan(email, type, balance, lengthOfLoan){
     });    
 }
 
+// Push transaction
+function addTransaction(email, type, transactionAmount, date){
+    return new Promise((resolve, reject) => {    
+        const customers = db
+            .collection('users')            
+            .findOneAndUpdate(
+                {email: email},
+                { $push: { transactions: {type:type, transactionAmount:transactionAmount, date:date}}},
+                {  returnOriginal: false },
+                function (err, documents) {
+                    err ? reject(err) : resolve(documents);
+                }
+            );            
 
-module.exports = {create, findOne, find, update, all, googleCreate, googleFind, googleFindOne, googleUpdate, createLoan};
+
+    });    
+}
+
+
+module.exports = {create, findOne, find, update, all, googleCreate, googleFind, googleFindOne, googleUpdate, createLoan, addTransaction};

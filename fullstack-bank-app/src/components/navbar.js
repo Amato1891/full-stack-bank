@@ -11,12 +11,6 @@ function NavBar(props){
     let name;
  !loginData ? name = Cookies.get('name') : name = loginData.name;
     const [loggedInUser,setLoggedInUser] = React.useState(props.loggedInUser);
-    const [windowSize, setWindowSize] = React.useState(window.innerWidth);
-
-    // function reportWindowSize() {
-    //   setWindowSize(window.innerWidth);
-    // };
-    // window.onresize = reportWindowSize;
 
     function handleLogout() {
       Cookies.remove('name');
@@ -28,7 +22,16 @@ function NavBar(props){
             window.location.reload();
     };
 
-      return(<>{ loggedInUser ? (
+      return(<>{ loginData ? (<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container-fluid">
+          <span className="navbar-text" onClick={handleLogout}>
+         Logout <Link to="/">
+              <button className="btn btn-dark" >
+              <i className="fa-solid fa-right-from-bracket"></i></button>
+          </Link>
+    </span>
+        </div>
+    </nav>) : loggedInUser ? (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <div className="container-fluid">
       <a className="navbar-brand" href="#"><i className="fa fa-home"></i></a>
@@ -50,7 +53,7 @@ function NavBar(props){
             <a className="nav-link " href="#/withdraw">Withdraw</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link " href="#/balance">Balance</a>
+            <a className="nav-link " href="#/transactions">Transactions</a>
           </li>
           <li className="nav-item">
             <a className="nav-link " href="#/alldata">All Data</a>

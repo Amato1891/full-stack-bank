@@ -13,17 +13,18 @@ function Login(){
 };
 
 function AfterLogin(){
-  return(<>
-<Card
-        bgcolor="secondary"
-        header="Where do you want to go?"
-        body={<div>
-          <Link id="login-link" to="/deposit"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Deposit Funds</button></Link>
-          <Link id="login-link" to="/withdraw"> <button id = 'link-btn' type="submit"className="btn btn-dark" >Withdraw Funds</button></Link>
-          <Link id="login-link" to="/balance"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Check balance</button></Link>
-          <Link id="login-link" to="/dashboard"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Dashboard</button></Link>
-        </div>}
-      />
+  return(<>{Cookies.get('loginData') ? (
+    <div style={{padding:'25px'}}><div style={{padding:'25px', textAlign:'center', background:'red',border:'3px solid black'}}><h5>Accounts created with Google Login are not fully supported in the app yet. We are working to enable all features for Google accounts. Please logout and join with your email to access all the features of this app.</h5></div></div>) : (<>
+    <h3 style={{textAlign:'center'}}>What would you like to do?</h3>
+      <div className="link-container">
+        <div className="link-item"><Link to="/deposit"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Deposit Funds</button></Link></div>
+        <div className="link-item"><Link to="/withdraw"> <button id = 'link-btn' type="submit"className="btn btn-dark" >Withdraw Funds</button></Link></div>
+        <div className="link-item"><Link to="/balance"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Transaction History</button></Link></div>
+        <div className="link-item"><Link to="/dashboard"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Dashboard</button></Link></div>
+        <div className="link-item"><Link to="/loan"> <button id = 'link-btn' type="submit" className="btn btn-dark" >Loans</button></Link></div>
+        </div>
+  </>)}
+  
   </>)
 }
 
@@ -48,7 +49,7 @@ function LoginForm(props){
         .then(text => {
             try {
                 const data = JSON.parse(text);
-                console.log('JSON:', data);
+                //console.log('JSON:', data);
                 Cookies.set('loggedInUser', true, { expires: expiration });
                 Cookies.set('name', data.name, { expires: expiration });
                 Cookies.set('email', data.email, { expires: expiration });
@@ -76,14 +77,14 @@ function LoginForm(props){
 
     const googleUser = () => {
       let parsedData = JSON.parse(Cookies.get('loginData'))
-      console.log(parsedData)
+      //console.log(parsedData)
       const url = `/account/googlecreate/${parsedData.name}/${parsedData.email}/${parsedData.googleId}`;
        (async () => {
            var res = await fetch(url);
-           console.log(res)
+           //console.log(res)
           //  if(res.status === 400) return setErrors('This email is already registered to another user.');
            var data = await res.json();
-           console.log(data);
+           //console.log(data);
            props.setShow(false);
        })();
     }

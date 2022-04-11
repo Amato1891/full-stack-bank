@@ -16,16 +16,16 @@ function Home(){
       <div>
       <h5>You have financial needs and we've got you covered!</h5>
       <ul className='service-description'>
-        <li>100% no fee checking and savings accounts.</li>
-        <li>Bad credit? No credit? No problem! We offer credit cards to everyone and we have competitive rates!</li>
+        <li>100% free checking accounts.</li>
+        <li>Bad credit? No credit? No problem! We offer credit cards to everyone of all credit scores and we have competitive rates!</li>
         <li>Loans for all of lifes major purchases like cars,boats,homes and more!</li>
       </ul>
       </div>
             <ul className="services-icons">
-            Checking and Savings<br/>
-              <li><a className="checking" href="/"><i className="fa-solid fa-money-check-dollar"></i></a></li>
+            Checkings Account<br/>
+              <li><Link to="/dashboard"><a className="checking" href="/"><i className="fa-solid fa-money-check-dollar"></i></a></Link></li>
               <hr/>Credit Cards<br/>
-              <li><a className="credit-card" href="/"><i className="fa-solid fa-credit-card"></i></a></li>
+              <li><Link to="/loan"><a className="credit-card" href="/"><i className="fa-solid fa-credit-card"></i></a></Link></li>
               <hr/>Loans<br/>
               <li><Link to="/loan"><a className="loan"><i className="fa-solid fa-landmark"></i></a></Link></li>   
             </ul>

@@ -121,3 +121,17 @@ form .row input::placeholder{
 form .signup-link a:hover{
   text-decoration: underline;
 }
+
+.link-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  padding:15px;
+}
+
+.link-item {
+  padding: 3px;
+}
+.link-item button {
+  border: 1px groove rgb(255, 255, 255);
+}

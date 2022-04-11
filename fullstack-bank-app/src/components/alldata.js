@@ -33,7 +33,7 @@ var requestOptions = {
         </div>
     </>) : (<>
         <h1>All Customer Data</h1>
-        <table className="table table-sm table-dark" style={{height:'500px'}}>
+        <table className="table table-sm table-dark" style={{height:'500px', border:'1px groove white'}}>
   <thead>
     <tr>
       <th scope="col">#</th>

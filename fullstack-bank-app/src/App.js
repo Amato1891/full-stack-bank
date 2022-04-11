@@ -6,7 +6,7 @@ import Home from './components/home';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
 import CreateAccount from './components/createaccount';
-import Balance from './components/balance';
+import Transactions from './components/transactions';
 import AllData from './components/alldata';
 import Deposit from './components/deposit';
 import Withdraw from './components/withdraw';
@@ -38,7 +38,7 @@ function Spa(){
             <Route path="/login"><Login/></Route>
             <Route path="/dashboard"><Dashboard/></Route>
             <Route path="/CreateAccount"><CreateAccount/></Route>
-            <Route path="/Balance"><Balance/></Route>
+            <Route path="/Transactions"><Transactions/></Route>
             <Route path="/AllData"><AllData/></Route>
             <Route path="/Deposit"><Deposit/></Route>
             <Route path="/Withdraw"> <Withdraw/></Route>

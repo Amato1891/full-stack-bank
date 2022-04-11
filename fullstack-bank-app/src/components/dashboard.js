@@ -1,7 +1,8 @@
 import React from 'react';
 import './/dashboard.css';
 import Cookies from 'js-cookie';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
+import ".//loan.css";
 
  function Dashboard() {
     const [data,setData] = React.useState('');
@@ -35,7 +36,7 @@ var requestOptions = {
           fetch(uri, requestOptions)
           .then(response => response.json())
           .then(data => {
-               console.log(data);
+               //console.log(data);
               setData(data)
           });
           // Push to login if not logged in
@@ -44,12 +45,14 @@ var requestOptions = {
       }, []);
 
     return(<>
+    {!data ? (<div className='loading'></div>) : (
+
         <div className='container'>
             <div className='dashboard-header'>
             <h4>Account Summary</h4><br/>
-            <h6>Checking and Savings</h6>
+            <h6>Checking</h6>
             <div className='dashboard-accounts'>
-            <table className="table table-sm table-dark">
+            <table className="table table-sm table-dark" style={{border:'1px groove white'}}>
             <thead>
     <tr>
       <th scope="col">Account Type</th>
@@ -71,7 +74,7 @@ var requestOptions = {
   </table>
             </div>
             <h6>Loans and Credit</h6>
-            <table className="table table-sm table-dark">
+            <table className="table table-sm table-dark" style={{border:'1px groove white'}}>
             <thead>
     <tr>
       <th scope="col">Loan Type</th>
@@ -80,18 +83,25 @@ var requestOptions = {
     </tr>
   </thead>
   <tbody>
-  {data.lineOfCredit ? (data.lineOfCredit.map((user,i) => {
+  {data.lineOfCredit.length > 0 ? (data.lineOfCredit.map((user,i) => {
         return(
         <tr key={i}>
       <td>{user.type}</td>
       <td>{user.balance}</td>
       <td>{user.length}</td>
         </tr>)
-    })) : <tr><td></td></tr>}
+    })) : <tr><td>No loans yet, apply for one today!<br/>
+    <Link style={{padding:'2px'}} to="/loan"><button style={{padding:'2px'}} type="submit" className="btn btn-light" >Loans</button></Link>
+    </td>
+          <td></td>
+          <td></td>
+          </tr>
+    }
   </tbody>
   </table>
             </div>
         </div>
+        )}
         </>)
  };
 
