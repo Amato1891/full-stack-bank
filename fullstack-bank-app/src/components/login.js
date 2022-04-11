@@ -111,7 +111,7 @@ function LoginForm(props){
           <hr/>
           { loginData ? ('') : (
           <GoogleLogin
-          clientId={'77760153420-mb0hci7u2tabpan5vdc0v76igcch724u.apps.googleusercontent.com'}
+          clientId={''}
           buttonText='Log in with Google'
           onSuccess={handleLogin}
           onFailure={handleFailure}
