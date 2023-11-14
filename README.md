@@ -1,5 +1,12 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Amato1891/full-stack-bank)](https://github.com/Amato1891/angular-quiz-app/issues)
+## Table of Contents
+- [Description](#description)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Usage](#usage)
+- [License](#license)
+- [Support](#support)
 # Full-Stack Gbank
 
 <img src="https://user-images.githubusercontent.com/84348911/162839042-737ec3cb-67f7-4101-a9c3-ec540b469469.png" width="700" height="500">
